@@ -15,6 +15,10 @@
             "Loic\\DevoirAppMvcPhpTouchePasAuKlaxon\\": "src/"
         }
     },
+    "scripts": {
+        "test": "phpunit",
+        "analyse": "phpstan analyse"
+    },
     "authors": [
         {
             "name": "loicfleury",
