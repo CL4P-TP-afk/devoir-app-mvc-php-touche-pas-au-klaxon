@@ -64,5 +64,12 @@ $router->get('/trips/:id/edit', function (string $id): void {
     $controller->edit((int) $id);
 });
 
+$router->post('/trips/:id', function (string $id): void {
+    AuthMiddleware::requireAuthentication();
+
+    $controller = new TripController();
+    $controller->update((int) $id);
+});
+
 
 $router->run();
