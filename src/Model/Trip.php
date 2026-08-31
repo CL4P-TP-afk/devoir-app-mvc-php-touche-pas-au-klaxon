@@ -78,6 +78,8 @@ class Trip
                 trips.contact_phone,
                 trips.contact_email,
                 trips.user_id,
+                trips.departure_agency_id,
+                trips.arrival_agency_id,
                 users.first_name,
                 users.last_name,
                 departure_agency.name AS departure_agency,
@@ -146,5 +148,39 @@ class Trip
         ]);
 
         return (int) $this->connection->lastInsertId();
+    }
+    /**
+     * Updates an existing trip.
+     *
+     * @param int $id Trip identifier.
+     * @param array<string, mixed> $data Updated trip data.
+     */
+    public function update(int $id, array $data): bool
+    {
+        $statement = $this->connection->prepare(
+            'UPDATE trips
+            SET
+                departure_date_time = :departure_date_time,
+                arrival_date_time = :arrival_date_time,
+                total_seats = :total_seats,
+                available_seats = :available_seats,
+                contact_phone = :contact_phone,
+                contact_email = :contact_email,
+                departure_agency_id = :departure_agency_id,
+                arrival_agency_id = :arrival_agency_id
+            WHERE id = :id'
+        );
+
+        return $statement->execute([
+            'departure_date_time' => $data['departure_date_time'],
+            'arrival_date_time' => $data['arrival_date_time'],
+            'total_seats' => $data['total_seats'],
+            'available_seats' => $data['available_seats'],
+            'contact_phone' => $data['contact_phone'],
+            'contact_email' => $data['contact_email'],
+            'departure_agency_id' => $data['departure_agency_id'],
+            'arrival_agency_id' => $data['arrival_agency_id'],
+            'id' => $id,
+        ]);
     }
 }
