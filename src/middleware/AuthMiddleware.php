@@ -34,9 +34,7 @@ class AuthMiddleware
     {
         self::requireAuthentication();
 
-        $user = SessionService::getUser();
-
-        if (($user['role'] ?? null) !== 'admin') {
+        if (!SessionService::isAdmin()) {
             SessionService::setFlash(
                 'error',
                 'You are not authorized to access this page.'
