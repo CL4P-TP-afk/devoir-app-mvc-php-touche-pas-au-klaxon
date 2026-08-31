@@ -78,6 +78,8 @@ class Trip
                 trips.contact_phone,
                 trips.contact_email,
                 trips.user_id,
+                trips.departure_agency_id,
+                trips.arrival_agency_id,
                 users.first_name,
                 users.last_name,
                 departure_agency.name AS departure_agency,
