@@ -80,4 +80,28 @@ class SessionService
 
         session_destroy();
     }
+
+    /**
+     * Stores a flash message in the session.
+     */
+    public static function setFlash(string $type, string $message): void
+    {
+        self::start();
+
+        $_SESSION['flash'][$type] = $message;
+    }
+
+    /**
+     * Returns and removes a flash message from the session.
+     */
+    public static function getFlash(string $type): ?string
+    {
+        self::start();
+
+        $message = $_SESSION['flash'][$type] ?? null;
+
+        unset($_SESSION['flash'][$type]);
+
+        return is_string($message) ? $message : null;
+    }
 }
