@@ -66,3 +66,51 @@ INSERT INTO users (
     '$2y$10$tv7fPvTjOfI./7L3uY0ueOln2p0kLpXSdUtqXHYw6Pc36KCcibSG2',
     'admin'
 );
+
+-- Trips
+-- Future demo trips generated relative to the seed execution date.
+
+INSERT INTO trips (
+    departure_date_time,
+    arrival_date_time,
+    total_seats,
+    available_seats,
+    contact_phone,
+    contact_email,
+    user_id,
+    departure_agency_id,
+    arrival_agency_id
+) VALUES
+(
+    DATE_ADD(NOW(), INTERVAL 2 DAY),
+    DATE_ADD(DATE_ADD(NOW(), INTERVAL 2 DAY), INTERVAL 4 HOUR),
+    4,
+    3,
+    '0612345678',
+    'alexandre.martin@email.fr',
+    1,
+    1,
+    2
+),
+(
+    DATE_ADD(NOW(), INTERVAL 4 DAY),
+    DATE_ADD(DATE_ADD(NOW(), INTERVAL 4 DAY), INTERVAL 3 HOUR),
+    3,
+    1,
+    '0698765432',
+    'sophie.dubois@email.fr',
+    2,
+    2,
+    5
+),
+(
+    DATE_ADD(NOW(), INTERVAL 7 DAY),
+    DATE_ADD(DATE_ADD(NOW(), INTERVAL 7 DAY), INTERVAL 5 HOUR),
+    5,
+    4,
+    '0622446688',
+    'julien.bernard@email.fr',
+    3,
+    3,
+    6
+);
