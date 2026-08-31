@@ -6,6 +6,7 @@ namespace Loic\DevoirAppMvcPhpTouchePasAuKlaxon\Controller;
 
 use Loic\DevoirAppMvcPhpTouchePasAuKlaxon\Model\Trip;
 use Loic\DevoirAppMvcPhpTouchePasAuKlaxon\Service\SessionService;
+use Loic\DevoirAppMvcPhpTouchePasAuKlaxon\Model\Agency;
 
 /**
  * Handles trip-related pages.
@@ -42,5 +43,17 @@ class TripController
         }
 
         require dirname(__DIR__, 2) . '/templates/trips/show.php';
+    }
+    /**
+     * Displays the trip creation form.
+     */
+    public function create(): void
+    {
+        $agencyModel = new Agency();
+
+        $agencies = $agencyModel->findAll();
+        $currentUser = SessionService::getUser();
+
+        require dirname(__DIR__, 2) . '/templates/trips/create.php';
     }
 }

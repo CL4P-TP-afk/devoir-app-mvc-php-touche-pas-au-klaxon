@@ -36,11 +36,19 @@ $router->get('/logout', function (): void {
     $controller->logout();
 });
 
+$router->get('/trips/create', function (): void {
+    AuthMiddleware::requireAuthentication();
+
+    $controller = new TripController();
+    $controller->create();
+});
+
 $router->get('/trips/:id', function (string $id): void {
     AuthMiddleware::requireAuthentication();
 
     $controller = new TripController();
     $controller->show((int) $id);
 });
+
 
 $router->run();
