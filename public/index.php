@@ -9,6 +9,7 @@ $dotenv->load();
 use Loic\DevoirAppMvcPhpTouchePasAuKlaxon\Service\SessionService;
 use Loic\DevoirAppMvcPhpTouchePasAuKlaxon\Controller\AuthController;
 use Loic\DevoirAppMvcPhpTouchePasAuKlaxon\Middleware\AuthMiddleware;
+use Loic\DevoirAppMvcPhpTouchePasAuKlaxon\Controller\TripController;
 use Buki\Router\Router;
 
 SessionService::start();
@@ -35,5 +36,11 @@ $router->get('/logout', function (): void {
     $controller->logout();
 });
 
+$router->get('/trips/:id', function (string $id): void {
+    AuthMiddleware::requireAuthentication();
+
+    $controller = new TripController();
+    $controller->show((int) $id);
+});
 
 $router->run();
