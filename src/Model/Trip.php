@@ -100,4 +100,51 @@ class Trip
 
         return $trip !== false ? $trip : null;
     }
+    /**
+     * Creates a new trip.
+     *
+     * @param array<string, mixed> $data Trip data.
+     *
+     * @return int Identifier of the created trip.
+     */
+    public function create(array $data): int
+    {
+        $statement = $this->connection->prepare(
+            'INSERT INTO trips (
+                departure_date_time,
+                arrival_date_time,
+                total_seats,
+                available_seats,
+                contact_phone,
+                contact_email,
+                user_id,
+                departure_agency_id,
+                arrival_agency_id
+            ) VALUES (
+                :departure_date_time,
+                :arrival_date_time,
+                :total_seats,
+                :available_seats,
+                :contact_phone,
+                :contact_email,
+                :user_id,
+                :departure_agency_id,
+                :arrival_agency_id
+            )'
+        );
+
+        $statement->execute([
+            'departure_date_time' => $data['departure_date_time'],
+            'arrival_date_time' => $data['arrival_date_time'],
+            'total_seats' => $data['total_seats'],
+            'available_seats' => $data['available_seats'],
+            'contact_phone' => $data['contact_phone'],
+            'contact_email' => $data['contact_email'],
+            'user_id' => $data['user_id'],
+            'departure_agency_id' => $data['departure_agency_id'],
+            'arrival_agency_id' => $data['arrival_agency_id'],
+        ]);
+
+        return (int) $this->connection->lastInsertId();
+    }
 }
