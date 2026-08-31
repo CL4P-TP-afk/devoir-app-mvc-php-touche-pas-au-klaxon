@@ -358,5 +358,46 @@ class TripController
         header("Location: /trips/{$id}/edit");
         exit;
     }
+    /**
+     * Deletes a trip owned by the authenticated user.
+     *
+     * @param int $id Trip identifier.
+     */
+    public function delete(int $id): void
+    {
+        $trip = $this->tripModel->findById($id);
+
+        if ($trip === null) {
+            SessionService::setFlash(
+                'error',
+                'Trip not found.'
+            );
+
+            header('Location: /');
+            exit;
+        }
+
+        $userId = SessionService::getUserId();
+
+        if ($userId === null || (int) $trip['user_id'] !== $userId) {
+            SessionService::setFlash(
+                'error',
+                'You are not authorized to delete this trip.'
+            );
+
+            header('Location: /');
+            exit;
+        }
+
+        $this->tripModel->delete($id);
+
+        SessionService::setFlash(
+            'success',
+            'Trip deleted successfully.'
+        );
+
+        header('Location: /');
+        exit;
+    }
 
 }
