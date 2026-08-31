@@ -8,6 +8,7 @@ $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();
 use Loic\DevoirAppMvcPhpTouchePasAuKlaxon\Service\SessionService;
 use Loic\DevoirAppMvcPhpTouchePasAuKlaxon\Controller\AuthController;
+use Loic\DevoirAppMvcPhpTouchePasAuKlaxon\Middleware\AuthMiddleware;
 use Buki\Router\Router;
 
 SessionService::start();
@@ -33,5 +34,6 @@ $router->get('/logout', function (): void {
     $controller = new AuthController();
     $controller->logout();
 });
+
 
 $router->run();
