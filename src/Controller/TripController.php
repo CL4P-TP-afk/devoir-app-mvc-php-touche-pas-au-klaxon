@@ -56,4 +56,95 @@ class TripController
 
         require dirname(__DIR__, 2) . '/templates/trips/create.php';
     }
+    /**
+     * Validates and stores a new trip.
+     */
+    public function store(): void
+    {
+        $departureAgencyId = (int) ($_POST['departure_agency_id'] ?? 0);
+        $arrivalAgencyId = (int) ($_POST['arrival_agency_id'] ?? 0);
+
+        $departureDateTime = trim(
+            (string) ($_POST['departure_date_time'] ?? '')
+        );
+
+        $arrivalDateTime = trim(
+            (string) ($_POST['arrival_date_time'] ?? '')
+        );
+
+        $totalSeats = (int) ($_POST['total_seats'] ?? 0);
+        $availableSeats = (int) ($_POST['available_seats'] ?? -1);
+
+        $contactPhone = trim(
+            (string) ($_POST['contact_phone'] ?? '')
+        );
+
+        $contactEmail = trim(
+            (string) ($_POST['contact_email'] ?? '')
+        );
+
+        if (
+            $departureAgencyId <= 0
+            || $arrivalAgencyId <= 0
+            || $departureDateTime === ''
+            || $arrivalDateTime === ''
+            || $totalSeats <= 0
+            || $availableSeats < 0
+            || $contactPhone === ''
+            || $contactEmail === ''
+        ) {
+            $this->redirectToCreateWithError(
+                'All fields are required.'
+            );
+        }
+
+        if ($departureAgencyId === $arrivalAgencyId) {
+            $this->redirectToCreateWithError(
+                'Departure and arrival agencies must be different.'
+            );
+        }
+
+        if (
+            strtotime($departureDateTime) === false
+            || strtotime($arrivalDateTime) === false
+            || strtotime($arrivalDateTime) <= strtotime($departureDateTime)
+        ) {
+            $this->redirectToCreateWithError(
+                'Arrival date and time must be later than departure date and time.'
+            );
+        }
+
+        if ($availableSeats > $totalSeats) {
+            $this->redirectToCreateWithError(
+                'Available seats cannot exceed total seats.'
+            );
+        }
+
+        if (filter_var($contactEmail, FILTER_VALIDATE_EMAIL) === false) {
+            $this->redirectToCreateWithError(
+                'The contact email address is invalid.'
+            );
+        }
+
+        // Database insertion will be added in the next step.
+        SessionService::setFlash(
+            'success',
+            'Trip data is valid.'
+        );
+
+        header('Location: /');
+        exit;
+    }
+
+    /**
+     * Redirects to the trip creation form with an error message.
+     */
+    private function redirectToCreateWithError(string $message): never
+    {
+        SessionService::setFlash('error', $message);
+
+        header('Location: /trips/create');
+        exit;
+    }
+
 }

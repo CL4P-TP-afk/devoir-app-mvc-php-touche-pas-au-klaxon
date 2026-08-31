@@ -43,6 +43,13 @@ $router->get('/trips/create', function (): void {
     $controller->create();
 });
 
+$router->post('/trips', function (): void {
+    AuthMiddleware::requireAuthentication();
+
+    $controller = new TripController();
+    $controller->store();
+});
+
 $router->get('/trips/:id', function (string $id): void {
     AuthMiddleware::requireAuthentication();
 
