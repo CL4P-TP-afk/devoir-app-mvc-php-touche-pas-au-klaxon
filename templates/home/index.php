@@ -6,6 +6,7 @@ use Loic\DevoirAppMvcPhpTouchePasAuKlaxon\Service\SessionService;
 
 $currentUser = SessionService::getUser();
 $error = SessionService::getFlash('error');
+$success = SessionService::getFlash('success');
 
 ?>
 
@@ -23,6 +24,12 @@ $error = SessionService::getFlash('error');
         <?php if ($error !== null): ?>
             <p>
                 <?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?>
+            </p>
+        <?php endif; ?>
+
+        <?php if ($success !== null): ?>
+            <p>
+                <?= htmlspecialchars($success, ENT_QUOTES, 'UTF-8') ?>
             </p>
         <?php endif; ?>
 

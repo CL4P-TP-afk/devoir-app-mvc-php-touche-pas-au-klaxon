@@ -126,10 +126,28 @@ class TripController
             );
         }
 
-        // Database insertion will be added in the next step.
+        $userId = SessionService::getUserId();
+
+        if ($userId === null) {
+            header('Location: /login');
+            exit;
+        }
+
+        $this->tripModel->create([
+            'departure_date_time' => $departureDateTime,
+            'arrival_date_time' => $arrivalDateTime,
+            'total_seats' => $totalSeats,
+            'available_seats' => $availableSeats,
+            'contact_phone' => $contactPhone,
+            'contact_email' => $contactEmail,
+            'user_id' => $userId,
+            'departure_agency_id' => $departureAgencyId,
+            'arrival_agency_id' => $arrivalAgencyId,
+        ]);
+
         SessionService::setFlash(
             'success',
-            'Trip data is valid.'
+            'Trip created successfully.'
         );
 
         header('Location: /');
