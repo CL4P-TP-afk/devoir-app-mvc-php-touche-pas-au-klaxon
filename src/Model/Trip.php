@@ -183,4 +183,20 @@ class Trip
             'id' => $id,
         ]);
     }
+    /**
+     * Deletes a trip from the database.
+     *
+     * @param int $id Trip identifier.
+     */
+    public function delete(int $id): bool
+    {
+        $statement = $this->connection->prepare(
+            'DELETE FROM trips
+            WHERE id = :id'
+        );
+
+        return $statement->execute([
+            'id' => $id,
+        ]);
+    }
 }
