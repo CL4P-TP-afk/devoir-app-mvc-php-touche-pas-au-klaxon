@@ -37,6 +37,7 @@ class Trip
                 trips.available_seats,
                 trips.contact_phone,
                 trips.contact_email,
+                trips.user_id,
                 users.first_name,
                 users.last_name,
                 departure_agency.name AS departure_agency,

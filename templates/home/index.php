@@ -1,6 +1,11 @@
 <?php
 
 declare(strict_types=1);
+
+use Loic\DevoirAppMvcPhpTouchePasAuKlaxon\Service\SessionService;
+
+$currentUser = SessionService::getUser();
+
 ?>
 
 <!DOCTYPE html>
@@ -58,6 +63,28 @@ declare(strict_types=1);
                         /
                         <?= (int) $trip['total_seats'] ?>
                     </p>
+                    <?php if ($currentUser !== null): ?>
+                        <div>
+                            <a href="/trips/<?= (int) $trip['id'] ?>">
+                                Détails
+                            </a>
+
+                            <?php if ((int) $trip['user_id'] === SessionService::getUserId()): ?>
+                                <a href="/trips/<?= (int) $trip['id'] ?>/edit">
+                                    Modifier
+                                </a>
+
+                                <form
+                                    action="/trips/<?= (int) $trip['id'] ?>/delete"
+                                    method="post"
+                                >
+                                    <button type="submit">
+                                        Supprimer
+                                    </button>
+                                </form>
+                            <?php endif; ?>
+                        </div>
+                    <?php endif; ?>
                 </article>
             <?php endforeach; ?>
         <?php endif; ?>
