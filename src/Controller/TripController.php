@@ -175,5 +175,41 @@ class TripController
         header('Location: /trips/create');
         exit;
     }
+    /**
+     * Displays the trip edit form.
+     *
+     * @param int $id Trip identifier.
+     */
+    public function edit(int $id): void
+    {
+        $trip = $this->tripModel->findById($id);
+
+        if ($trip === null) {
+            SessionService::setFlash(
+                'error',
+                'Trip not found.'
+            );
+
+            header('Location: /');
+            exit;
+        }
+
+        $userId = SessionService::getUserId();
+
+        if ($userId === null || (int) $trip['user_id'] !== $userId) {
+            SessionService::setFlash(
+                'error',
+                'You are not authorized to edit this trip.'
+            );
+
+            header('Location: /');
+            exit;
+        }
+
+        $agencyModel = new Agency();
+        $agencies = $agencyModel->findAll();
+
+        require dirname(__DIR__, 2) . '/templates/trips/edit.php';
+    }
 
 }
