@@ -1,6 +1,10 @@
 <?php
 
 declare(strict_types=1);
+
+use Loic\DevoirAppMvcPhpTouchePasAuKlaxon\Service\SessionService;
+
+$error = SessionService::getFlash('error');
 ?>
 
 <!DOCTYPE html>
@@ -15,23 +19,192 @@ declare(strict_types=1);
     <main>
         <h1>Modifier le trajet</h1>
 
-        <p>
-            <?= htmlspecialchars(
-                (string) $trip['departure_agency'],
-                ENT_QUOTES,
-                'UTF-8'
-            ) ?>
-            →
-            <?= htmlspecialchars(
-                (string) $trip['arrival_agency'],
-                ENT_QUOTES,
-                'UTF-8'
-            ) ?>
-        </p>
+        <?php if ($error !== null): ?>
+            <p>
+                <?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?>
+            </p>
+        <?php endif; ?>
 
-        <p>Agences disponibles : <?= count($agencies) ?></p>
+        <form
+            action="/trips/<?= (int) $trip['id'] ?>"
+            method="post"
+        >
+            <div>
+                <label for="departure_agency_id">
+                    Agence de départ
+                </label>
 
-        <a href="/">Annuler</a>
+                <select
+                    id="departure_agency_id"
+                    name="departure_agency_id"
+                    required
+                >
+                    <?php foreach ($agencies as $agency): ?>
+                        <option
+                            value="<?= (int) $agency['id'] ?>"
+                            <?= (int) $agency['id']
+                                === (int) $trip['departure_agency_id']
+                                ? 'selected'
+                                : '' ?>
+                        >
+                            <?= htmlspecialchars(
+                                (string) $agency['name'],
+                                ENT_QUOTES,
+                                'UTF-8'
+                            ) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
+            <div>
+                <label for="arrival_agency_id">
+                    Agence d'arrivée
+                </label>
+
+                <select
+                    id="arrival_agency_id"
+                    name="arrival_agency_id"
+                    required
+                >
+                    <?php foreach ($agencies as $agency): ?>
+                        <option
+                            value="<?= (int) $agency['id'] ?>"
+                            <?= (int) $agency['id']
+                                === (int) $trip['arrival_agency_id']
+                                ? 'selected'
+                                : '' ?>
+                        >
+                            <?= htmlspecialchars(
+                                (string) $agency['name'],
+                                ENT_QUOTES,
+                                'UTF-8'
+                            ) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
+            <div>
+                <label for="departure_date_time">
+                    Date et heure de départ
+                </label>
+
+                <input
+                    type="datetime-local"
+                    id="departure_date_time"
+                    name="departure_date_time"
+                    value="<?= htmlspecialchars(
+                        date(
+                            'Y-m-d\TH:i',
+                            strtotime(
+                                (string) $trip['departure_date_time']
+                            )
+                        ),
+                        ENT_QUOTES,
+                        'UTF-8'
+                    ) ?>"
+                    required
+                >
+            </div>
+
+            <div>
+                <label for="arrival_date_time">
+                    Date et heure d'arrivée
+                </label>
+
+                <input
+                    type="datetime-local"
+                    id="arrival_date_time"
+                    name="arrival_date_time"
+                    value="<?= htmlspecialchars(
+                        date(
+                            'Y-m-d\TH:i',
+                            strtotime(
+                                (string) $trip['arrival_date_time']
+                            )
+                        ),
+                        ENT_QUOTES,
+                        'UTF-8'
+                    ) ?>"
+                    required
+                >
+            </div>
+
+            <div>
+                <label for="total_seats">
+                    Nombre total de places
+                </label>
+
+                <input
+                    type="number"
+                    id="total_seats"
+                    name="total_seats"
+                    min="1"
+                    value="<?= (int) $trip['total_seats'] ?>"
+                    required
+                >
+            </div>
+
+            <div>
+                <label for="available_seats">
+                    Places disponibles
+                </label>
+
+                <input
+                    type="number"
+                    id="available_seats"
+                    name="available_seats"
+                    min="0"
+                    value="<?= (int) $trip['available_seats'] ?>"
+                    required
+                >
+            </div>
+
+            <div>
+                <label for="contact_phone">
+                    Téléphone
+                </label>
+
+                <input
+                    type="tel"
+                    id="contact_phone"
+                    name="contact_phone"
+                    value="<?= htmlspecialchars(
+                        (string) $trip['contact_phone'],
+                        ENT_QUOTES,
+                        'UTF-8'
+                    ) ?>"
+                    required
+                >
+            </div>
+
+            <div>
+                <label for="contact_email">
+                    E-mail
+                </label>
+
+                <input
+                    type="email"
+                    id="contact_email"
+                    name="contact_email"
+                    value="<?= htmlspecialchars(
+                        (string) $trip['contact_email'],
+                        ENT_QUOTES,
+                        'UTF-8'
+                    ) ?>"
+                    required
+                >
+            </div>
+
+            <button type="submit">
+                Enregistrer les modifications
+            </button>
+
+            <a href="/">
+                Annuler
+            </a>
+        </form>
     </main>
 </body>
 </html>
