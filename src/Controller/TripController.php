@@ -104,6 +104,17 @@ class TripController
             );
         }
 
+        $agencyModel = new Agency();
+
+        if (
+            !$agencyModel->exists($departureAgencyId)
+            || !$agencyModel->exists($arrivalAgencyId)
+        ) {
+            $this->redirectToCreateWithError(
+                'The selected agency does not exist.'
+            );
+        }
+
         if (
             strtotime($departureDateTime) === false
             || strtotime($arrivalDateTime) === false

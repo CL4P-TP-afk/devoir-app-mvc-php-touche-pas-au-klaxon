@@ -38,4 +38,23 @@ class Agency
 
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
+    /**
+     * Checks whether an agency exists.
+     *
+     * @param int $id Agency identifier.
+     */
+    public function exists(int $id): bool
+    {
+        $statement = $this->connection->prepare(
+            'SELECT COUNT(*)
+            FROM agencies
+            WHERE id = :id'
+        );
+
+        $statement->execute([
+            'id' => $id,
+        ]);
+
+        return (int) $statement->fetchColumn() > 0;
+    }
 }
