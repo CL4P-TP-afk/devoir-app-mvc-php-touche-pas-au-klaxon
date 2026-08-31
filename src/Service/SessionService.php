@@ -104,4 +104,27 @@ class SessionService
 
         return is_string($message) ? $message : null;
     }
+    /**
+     * Checks whether the authenticated user is an administrator.
+     */
+    public static function isAdmin(): bool
+    {
+        $user = self::getUser();
+
+        return ($user['role'] ?? null) === 'admin';
+    }
+
+    /**
+     * Returns the identifier of the authenticated user.
+     */
+    public static function getUserId(): ?int
+    {
+        $user = self::getUser();
+
+        if (!isset($user['id']) || !is_int($user['id'])) {
+            return null;
+        }
+
+        return $user['id'];
+    }
 }
