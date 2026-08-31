@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Loic\DevoirAppMvcPhpTouchePasAuKlaxon\Service\SessionService;
 
 $currentUser = SessionService::getUser();
+$error = SessionService::getFlash('error');
 
 ?>
 
@@ -19,6 +20,11 @@ $currentUser = SessionService::getUser();
 <body>
     <main>
         <h1>Trajets disponibles</h1>
+        <?php if ($error !== null): ?>
+            <p>
+                <?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?>
+            </p>
+        <?php endif; ?>
 
         <?php if ($trips === []): ?>
             <p>Aucun trajet disponible pour le moment.</p>
