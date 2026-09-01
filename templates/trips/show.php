@@ -1,15 +1,13 @@
 <?php
 
 declare(strict_types=1);
+
+$pageTitle = 'Détail du trajet';
 ?>
 
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Détail du trajet - Touche pas au klaxon</title>
-</head>
+<?php require dirname(__DIR__) . '/partials/head.php'; ?>
 
 <body>
     <?php require dirname(__DIR__) . '/partials/header.php'; ?>
