@@ -23,9 +23,15 @@ $pageTitle = 'Accueil';
         <div class="mb-4">
             <h1 class="h2 mb-2">Trajets disponibles</h1>
 
-            <p class="text-muted mb-0">
-                Retrouvez les prochains trajets disposant encore de places.
-            </p>
+            <?php if ($currentUser === null): ?>
+                <p class="text-muted mb-0">
+                    Connectez-vous pour obtenir plus d'informations sur un trajet.
+                </p>
+            <?php else: ?>
+                <p class="text-muted mb-0">
+                    Retrouvez les prochains trajets disposant encore de places.
+                </p>
+            <?php endif; ?>
         </div>
 
         <?php if ($error !== null): ?>
