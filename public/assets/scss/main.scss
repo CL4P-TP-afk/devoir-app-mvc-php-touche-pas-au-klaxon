@@ -13,3 +13,23 @@ $success: #82b864;
 // Bootstrap is imported after the variable overrides so that it generates
 // its components and utility classes using the project theme.
 @import "../../../node_modules/bootstrap/scss/bootstrap";
+
+// -----------------------------------------------------------------------------
+// Application layout
+// -----------------------------------------------------------------------------
+
+html,
+body {
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: $light;
+}
+
+main {
+    flex: 1;
+}

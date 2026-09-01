@@ -11859,5 +11859,20 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f1f8fc;
+}
+
+main {
+  flex: 1;
+}
 
 /*# sourceMappingURL=main.css.map */
