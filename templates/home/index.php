@@ -131,12 +131,14 @@ $pageTitle = 'Accueil';
                                         <div
                                             class="d-flex flex-column gap-2"
                                         >
-                                            <a
+                                            <button
                                                 class="btn btn-primary"
-                                                href="/trips/<?= (int) $trip['id'] ?>"
+                                                type="button"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#tripModal<?= (int) $trip['id'] ?>"
                                             >
                                                 Détails
-                                            </a>
+                                            </button>
 
                                             <?php if (
                                                 (int) $trip['user_id']
@@ -169,6 +171,109 @@ $pageTitle = 'Accueil';
                                 </div>
                             </div>
                         </article>
+                        <div
+                            class="modal fade"
+                            id="tripModal<?= (int) $trip['id'] ?>"
+                            tabindex="-1"
+                            aria-labelledby="tripModalLabel<?= (int) $trip['id'] ?>"
+                            aria-hidden="true"
+                        >
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-secondary text-white">
+                                        <h2
+                                            class="modal-title fs-5"
+                                            id="tripModalLabel<?= (int) $trip['id'] ?>"
+                                        >
+                                            Détails du trajet
+                                        </h2>
+
+                                        <button
+                                            type="button"
+                                            class="btn-close btn-close-white"
+                                            data-bs-dismiss="modal"
+                                            aria-label="Fermer"
+                                        ></button>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <h3 class="h6 text-secondary">
+                                            Trajet
+                                        </h3>
+
+                                        <p>
+                                            <strong>Départ :</strong>
+                                            <?= htmlspecialchars(
+                                                (string) $trip['departure_agency'],
+                                                ENT_QUOTES,
+                                                'UTF-8'
+                                            ) ?>
+                                        </p>
+
+                                        <p>
+                                            <strong>Arrivée :</strong>
+                                            <?= htmlspecialchars(
+                                                (string) $trip['arrival_agency'],
+                                                ENT_QUOTES,
+                                                'UTF-8'
+                                            ) ?>
+                                        </p>
+
+                                        <hr>
+
+                                        <h3 class="h6 text-secondary">
+                                            Proposé par
+                                        </h3>
+
+                                        <p>
+                                            <?= htmlspecialchars(
+                                                (string) $trip['first_name'],
+                                                ENT_QUOTES,
+                                                'UTF-8'
+                                            ) ?>
+                                            <?= htmlspecialchars(
+                                                (string) $trip['last_name'],
+                                                ENT_QUOTES,
+                                                'UTF-8'
+                                            ) ?>
+                                        </p>
+
+                                        <p>
+                                            <strong>Téléphone :</strong>
+                                            <?= htmlspecialchars(
+                                                (string) $trip['contact_phone'],
+                                                ENT_QUOTES,
+                                                'UTF-8'
+                                            ) ?>
+                                        </p>
+
+                                        <p>
+                                            <strong>E-mail :</strong>
+                                            <?= htmlspecialchars(
+                                                (string) $trip['contact_email'],
+                                                ENT_QUOTES,
+                                                'UTF-8'
+                                            ) ?>
+                                        </p>
+
+                                        <p class="mb-0">
+                                            <strong>Nombre total de places :</strong>
+                                            <?= (int) $trip['total_seats'] ?>
+                                        </p>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button
+                                            type="button"
+                                            class="btn btn-secondary"
+                                            data-bs-dismiss="modal"
+                                        >
+                                            Fermer
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 <?php endforeach; ?>
             </div>
@@ -176,5 +281,6 @@ $pageTitle = 'Accueil';
     </main>
 
     <?php require dirname(__DIR__) . '/partials/footer.php'; ?>
+    <?php require dirname(__DIR__) . '/partials/scripts.php'; ?>
 </body>
 </html>

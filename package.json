@@ -8,7 +8,9 @@
   },
   "scripts": {
     "sass": "sass public/assets/scss/main.scss public/assets/css/main.css",
-    "sass:watch": "sass --watch public/assets/scss/main.scss public/assets/css/main.css"
+    "sass:watch": "sass --watch public/assets/scss/main.scss public/assets/css/main.css",
+    "build:js": "node -e \"require('fs').mkdirSync('public/assets/js',{recursive:true}); require('fs').copyFileSync('node_modules/bootstrap/dist/js/bootstrap.bundle.min.js','public/assets/js/bootstrap.bundle.min.js')\"",
+    "build": "npm run sass && npm run build:js"
   },
   "repository": {
     "type": "git",
