@@ -32,7 +32,7 @@ $success = SessionService::getFlash('success');
             </p>
         <?php endif; ?>
 
-        <section>
+        <section id="users">
             <h2>Utilisateurs</h2>
 
             <table>
@@ -90,7 +90,7 @@ $success = SessionService::getFlash('success');
             </table>
         </section>
 
-        <section>
+        <section id="agencies">
             <h2>Agences</h2>
 
             <table>
@@ -141,7 +141,7 @@ $success = SessionService::getFlash('success');
             </a>
         </section>
 
-        <section>
+        <section id="trips">
             <h2>Trajets</h2>
 
             <table>
