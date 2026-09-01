@@ -76,4 +76,64 @@ class AdminController
         header('Location: /admin');
         exit;
     }
+    /**
+     * Displays the agency edition form.
+     */
+    public function editAgency(int $id): void
+    {
+        $agency = $this->agencyModel->findById($id);
+
+        if ($agency === null) {
+            SessionService::setFlash(
+                'error',
+                'Agence introuvable.'
+            );
+
+            header('Location: /admin');
+            exit;
+        }
+
+        require dirname(__DIR__, 2)
+            . '/templates/admin/agencies/edit.php';
+    }
+
+    /**
+     * Updates an agency.
+     */
+    public function updateAgency(int $id): void
+    {
+        $agency = $this->agencyModel->findById($id);
+
+        if ($agency === null) {
+            SessionService::setFlash(
+                'error',
+                'Agence introuvable.'
+            );
+
+            header('Location: /admin');
+            exit;
+        }
+
+        $name = trim((string) ($_POST['name'] ?? ''));
+
+        if ($name === '') {
+            SessionService::setFlash(
+                'error',
+                'Le nom de l\'agence est obligatoire.'
+            );
+
+            header("Location: /admin/agencies/{$id}/edit");
+            exit;
+        }
+
+        $this->agencyModel->update($id, $name);
+
+        SessionService::setFlash(
+            'success',
+            'L\'agence a été modifiée avec succès.'
+        );
+
+        header('Location: /admin');
+        exit;
+    }
 }

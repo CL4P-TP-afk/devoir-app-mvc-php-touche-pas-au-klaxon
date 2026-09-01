@@ -100,4 +100,18 @@ $router->post('/admin/agencies', function (): void {
     $controller->storeAgency();
 });
 
+$router->get('/admin/agencies/:id/edit', function (int $id): void {
+    AuthMiddleware::requireAdmin();
+
+    $controller = new AdminController();
+    $controller->editAgency($id);
+});
+
+$router->post('/admin/agencies/:id', function (int $id): void {
+    AuthMiddleware::requireAdmin();
+
+    $controller = new AdminController();
+    $controller->updateAgency($id);
+});
+
 $router->run();
