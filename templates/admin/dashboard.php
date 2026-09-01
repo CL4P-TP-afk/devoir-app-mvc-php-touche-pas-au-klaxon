@@ -6,15 +6,13 @@ use Loic\DevoirAppMvcPhpTouchePasAuKlaxon\Service\SessionService;
 
 $error = SessionService::getFlash('error');
 $success = SessionService::getFlash('success');
+
+$pageTitle = 'Tableau de bord administrateur';
 ?>
 
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administration - Touche pas au klaxon</title>
-</head>
+<?php require dirname(__DIR__) . '/partials/head.php'; ?>
 
 <body>
     <?php require dirname(__DIR__) . '/partials/header.php'; ?>
