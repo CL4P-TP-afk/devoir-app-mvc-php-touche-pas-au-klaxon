@@ -199,4 +199,41 @@ class Trip
             'id' => $id,
         ]);
     }
+    /**
+     * Returns all trips for administration.
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    public function findAll(): array
+    {
+        $statement = $this->connection->prepare(
+            'SELECT
+                trips.id,
+                trips.departure_date_time,
+                trips.arrival_date_time,
+                trips.total_seats,
+                trips.available_seats,
+                trips.contact_phone,
+                trips.contact_email,
+                trips.user_id,
+                trips.departure_agency_id,
+                trips.arrival_agency_id,
+                users.first_name,
+                users.last_name,
+                departure_agency.name AS departure_agency,
+                arrival_agency.name AS arrival_agency
+            FROM trips
+            INNER JOIN users
+                ON users.id = trips.user_id
+            INNER JOIN agencies AS departure_agency
+                ON departure_agency.id = trips.departure_agency_id
+            INNER JOIN agencies AS arrival_agency
+                ON arrival_agency.id = trips.arrival_agency_id
+            ORDER BY trips.departure_date_time ASC'
+        );
+
+        $statement->execute();
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

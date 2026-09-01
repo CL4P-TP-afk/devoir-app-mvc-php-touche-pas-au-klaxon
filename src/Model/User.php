@@ -68,4 +68,27 @@ class User
 
         return $user !== false ? $user : null;
     }
+    /**
+     * Returns all users ordered by last name and first name.
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    public function findAll(): array
+    {
+        $statement = $this->connection->prepare(
+            'SELECT
+                id,
+                first_name,
+                last_name,
+                phone,
+                email,
+                role
+            FROM users
+            ORDER BY last_name ASC, first_name ASC'
+        );
+
+        $statement->execute();
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
