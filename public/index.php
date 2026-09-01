@@ -86,4 +86,18 @@ $router->get('/admin', function (): void {
     $controller->dashboard();
 });
 
+$router->get('/admin/agencies/create', function (): void {
+    AuthMiddleware::requireAdmin();
+
+    $controller = new AdminController();
+    $controller->createAgency();
+});
+
+$router->post('/admin/agencies', function (): void {
+    AuthMiddleware::requireAdmin();
+
+    $controller = new AdminController();
+    $controller->storeAgency();
+});
+
 $router->run();
