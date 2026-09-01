@@ -1,0 +1,27 @@
+{
+  "name": "devoir-app-mvc-php-touche-pas-au-klaxon",
+  "version": "1.0.0",
+  "description": "Application intranet de covoiturage développée en PHP avec une architecture MVC.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "sass": "sass public/assets/scss/main.scss public/assets/css/main.css",
+    "sass:watch": "sass --watch public/assets/scss/main.scss public/assets/css/main.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github-perso:CL4P-TP-afk/devoir-app-mvc-php-touche-pas-au-klaxon.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bootstrap": "^5.3.8"
+  },
+  "devDependencies": {
+    "sass": "^1.103.1"
+  }
+}
