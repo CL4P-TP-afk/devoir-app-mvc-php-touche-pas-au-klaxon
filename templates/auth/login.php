@@ -21,6 +21,7 @@ if (SessionService::isAuthenticated()) {
 </head>
 
 <body>
+    <?php require dirname(__DIR__) . '/partials/header.php'; ?>
     <main>
         <h1>Connexion</h1>
 
@@ -52,5 +53,6 @@ if (SessionService::isAuthenticated()) {
             <button type="submit">Se connecter</button>
         </form>
     </main>
+    <?php require dirname(__DIR__) . '/partials/footer.php'; ?>
 </body>
 </html>

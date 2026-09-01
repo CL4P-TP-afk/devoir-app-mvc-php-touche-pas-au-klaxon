@@ -17,6 +17,7 @@ $success = SessionService::getFlash('success');
 </head>
 
 <body>
+    <?php require dirname(__DIR__) . '/partials/header.php'; ?>
     <main>
         <h1>Tableau de bord administrateur</h1>
 
@@ -222,5 +223,6 @@ $success = SessionService::getFlash('success');
             Retour à l'accueil
         </a>
     </main>
+    <?php require dirname(__DIR__) . '/partials/footer.php'; ?>
 </body>
 </html>

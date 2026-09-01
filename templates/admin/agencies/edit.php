@@ -16,6 +16,7 @@ $error = SessionService::getFlash('error');
 </head>
 
 <body>
+    <?php require dirname(__DIR__, 2) . '/partials/header.php'; ?>
     <main>
         <h1>Modifier une agence</h1>
 
@@ -60,5 +61,6 @@ $error = SessionService::getFlash('error');
             Annuler
         </a>
     </main>
+    <?php require dirname(__DIR__, 2) . '/partials/footer.php'; ?>
 </body>
 </html>

@@ -16,6 +16,7 @@ $error = SessionService::getFlash('error');
 </head>
 
 <body>
+    <?php require dirname(__DIR__) . '/partials/header.php'; ?>
     <main>
         <h1>Modifier le trajet</h1>
 
@@ -206,5 +207,6 @@ $error = SessionService::getFlash('error');
             </a>
         </form>
     </main>
+    <?php require dirname(__DIR__) . '/partials/footer.php'; ?>
 </body>
 </html>

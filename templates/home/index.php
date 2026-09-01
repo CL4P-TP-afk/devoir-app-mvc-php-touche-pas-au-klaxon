@@ -19,6 +19,7 @@ $success = SessionService::getFlash('success');
 </head>
 
 <body>
+    <?php require dirname(__DIR__) . '/partials/header.php'; ?>
     <main>
         <h1>Trajets disponibles</h1>
         <?php if ($error !== null): ?>
@@ -102,5 +103,6 @@ $success = SessionService::getFlash('success');
             <?php endforeach; ?>
         <?php endif; ?>
     </main>
+    <?php require dirname(__DIR__) . '/partials/footer.php'; ?>
 </body>
 </html>

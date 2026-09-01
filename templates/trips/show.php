@@ -12,6 +12,7 @@ declare(strict_types=1);
 </head>
 
 <body>
+    <?php require dirname(__DIR__) . '/partials/header.php'; ?>
     <main>
         <h1>
             <?= htmlspecialchars(
@@ -86,5 +87,6 @@ declare(strict_types=1);
 
         <a href="/">Retour aux trajets</a>
     </main>
+    <?php require dirname(__DIR__) . '/partials/footer.php'; ?>
 </body>
 </html>
