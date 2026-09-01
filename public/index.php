@@ -10,6 +10,7 @@ use Loic\DevoirAppMvcPhpTouchePasAuKlaxon\Service\SessionService;
 use Loic\DevoirAppMvcPhpTouchePasAuKlaxon\Controller\AuthController;
 use Loic\DevoirAppMvcPhpTouchePasAuKlaxon\Middleware\AuthMiddleware;
 use Loic\DevoirAppMvcPhpTouchePasAuKlaxon\Controller\TripController;
+use Loic\DevoirAppMvcPhpTouchePasAuKlaxon\Controller\AdminController;
 use Buki\Router\Router;
 
 SessionService::start();
@@ -76,6 +77,55 @@ $router->post('/trips/:id/delete', function (string $id): void {
 
     $controller = new TripController();
     $controller->delete((int) $id);
+});
+
+$router->get('/admin', function (): void {
+    AuthMiddleware::requireAdmin();
+
+    $controller = new AdminController();
+    $controller->dashboard();
+});
+
+$router->get('/admin/agencies/create', function (): void {
+    AuthMiddleware::requireAdmin();
+
+    $controller = new AdminController();
+    $controller->createAgency();
+});
+
+$router->post('/admin/agencies', function (): void {
+    AuthMiddleware::requireAdmin();
+
+    $controller = new AdminController();
+    $controller->storeAgency();
+});
+
+$router->get('/admin/agencies/:id/edit', function (int $id): void {
+    AuthMiddleware::requireAdmin();
+
+    $controller = new AdminController();
+    $controller->editAgency($id);
+});
+
+$router->post('/admin/agencies/:id', function (int $id): void {
+    AuthMiddleware::requireAdmin();
+
+    $controller = new AdminController();
+    $controller->updateAgency($id);
+});
+
+$router->post('/admin/agencies/:id/delete', function (int $id): void {
+    AuthMiddleware::requireAdmin();
+
+    $controller = new AdminController();
+    $controller->deleteAgency($id);
+});
+
+$router->post('/admin/trips/:id/delete', function (int $id): void {
+    AuthMiddleware::requireAdmin();
+
+    $controller = new AdminController();
+    $controller->deleteTrip($id);
 });
 
 $router->run();
