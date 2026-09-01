@@ -71,5 +71,11 @@ $router->post('/trips/:id', function (string $id): void {
     $controller->update((int) $id);
 });
 
+$router->post('/trips/:id/delete', function (string $id): void {
+    AuthMiddleware::requireAuthentication();
+
+    $controller = new TripController();
+    $controller->delete((int) $id);
+});
 
 $router->run();
