@@ -10,6 +10,7 @@ use Loic\DevoirAppMvcPhpTouchePasAuKlaxon\Service\SessionService;
 use Loic\DevoirAppMvcPhpTouchePasAuKlaxon\Controller\AuthController;
 use Loic\DevoirAppMvcPhpTouchePasAuKlaxon\Middleware\AuthMiddleware;
 use Loic\DevoirAppMvcPhpTouchePasAuKlaxon\Controller\TripController;
+use Loic\DevoirAppMvcPhpTouchePasAuKlaxon\Controller\AdminController;
 use Buki\Router\Router;
 
 SessionService::start();
@@ -76,6 +77,13 @@ $router->post('/trips/:id/delete', function (string $id): void {
 
     $controller = new TripController();
     $controller->delete((int) $id);
+});
+
+$router->get('/admin', function (): void {
+    AuthMiddleware::requireAdmin();
+
+    $controller = new AdminController();
+    $controller->dashboard();
 });
 
 $router->run();
