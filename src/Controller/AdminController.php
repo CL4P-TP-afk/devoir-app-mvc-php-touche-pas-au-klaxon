@@ -8,6 +8,7 @@ use Loic\DevoirAppMvcPhpTouchePasAuKlaxon\Model\Agency;
 use Loic\DevoirAppMvcPhpTouchePasAuKlaxon\Model\Trip;
 use Loic\DevoirAppMvcPhpTouchePasAuKlaxon\Model\User;
 use Loic\DevoirAppMvcPhpTouchePasAuKlaxon\Service\SessionService;
+use PDOException;
 
 /**
  * Handles administration pages.
@@ -132,6 +133,40 @@ class AdminController
             'success',
             'L\'agence a été modifiée avec succès.'
         );
+
+        header('Location: /admin');
+        exit;
+    }
+    /**
+     * Deletes an agency.
+     */
+    public function deleteAgency(int $id): void
+    {
+        $agency = $this->agencyModel->findById($id);
+
+        if ($agency === null) {
+            SessionService::setFlash(
+                'error',
+                'Agence introuvable.'
+            );
+
+            header('Location: /admin');
+            exit;
+        }
+
+        try {
+            $this->agencyModel->delete($id);
+
+            SessionService::setFlash(
+                'success',
+                'L\'agence a été supprimée avec succès.'
+            );
+        } catch (PDOException $exception) {
+            SessionService::setFlash(
+                'error',
+                'Impossible de supprimer cette agence car elle est utilisée par un trajet.'
+            );
+        }
 
         header('Location: /admin');
         exit;
