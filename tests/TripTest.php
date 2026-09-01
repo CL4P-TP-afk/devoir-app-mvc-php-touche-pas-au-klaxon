@@ -149,5 +149,38 @@ final class TripTest extends TestCase
             ]);
         }
     }
+    /**
+     * Verifies that a trip can be deleted from the database.
+     */
+    public function testTripCanBeDeleted(): void
+    {
+        $tripModel = new Trip();
+
+        $tripId = $tripModel->create([
+            'departure_date_time' => date(
+                'Y-m-d H:i:s',
+                strtotime('+20 days')
+            ),
+            'arrival_date_time' => date(
+                'Y-m-d H:i:s',
+                strtotime('+20 days +4 hours')
+            ),
+            'total_seats' => 4,
+            'available_seats' => 3,
+            'contact_phone' => '0612345678',
+            'contact_email' => 'alexandre.martin@email.fr',
+            'user_id' => 1,
+            'departure_agency_id' => 1,
+            'arrival_agency_id' => 2,
+        ]);
+
+        $deleted = $tripModel->delete($tripId);
+
+        $this->assertTrue($deleted);
+
+        $trip = $tripModel->findById($tripId);
+
+        $this->assertNull($trip);
+    }
 
 }
