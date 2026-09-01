@@ -121,4 +121,11 @@ $router->post('/admin/agencies/:id/delete', function (int $id): void {
     $controller->deleteAgency($id);
 });
 
+$router->post('/admin/trips/:id/delete', function (int $id): void {
+    AuthMiddleware::requireAdmin();
+
+    $controller = new AdminController();
+    $controller->deleteTrip($id);
+});
+
 $router->run();

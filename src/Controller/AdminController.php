@@ -171,4 +171,31 @@ class AdminController
         header('Location: /admin');
         exit;
     }
+    /**
+     * Deletes a trip from the administration dashboard.
+     */
+    public function deleteTrip(int $id): void
+    {
+        $trip = $this->tripModel->findById($id);
+
+        if ($trip === null) {
+            SessionService::setFlash(
+                'error',
+                'Trajet introuvable.'
+            );
+
+            header('Location: /admin');
+            exit;
+        }
+
+        $this->tripModel->delete($id);
+
+        SessionService::setFlash(
+            'success',
+            'Le trajet a été supprimé avec succès.'
+        );
+
+        header('Location: /admin');
+        exit;
+    }
 }
