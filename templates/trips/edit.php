@@ -45,6 +45,15 @@ $pageTitle = 'Modifier un trajet';
                     action="/trips/<?= (int) $trip['id'] ?>"
                     method="post"
                 >
+                <input
+                    type="hidden"
+                    name="csrf_token"
+                    value="<?= htmlspecialchars(
+                        SessionService::getCsrfToken(),
+                        ENT_QUOTES,
+                        'UTF-8'
+                    ) ?>"
+                >
                     <div class="card-body p-4">
                         <h2 class="h5 text-secondary mb-3">
                             Itinéraire

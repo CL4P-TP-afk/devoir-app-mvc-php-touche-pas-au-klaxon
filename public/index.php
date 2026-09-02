@@ -9,6 +9,7 @@ $dotenv->load();
 use Loic\DevoirAppMvcPhpTouchePasAuKlaxon\Service\SessionService;
 use Loic\DevoirAppMvcPhpTouchePasAuKlaxon\Controller\AuthController;
 use Loic\DevoirAppMvcPhpTouchePasAuKlaxon\Middleware\AuthMiddleware;
+use Loic\DevoirAppMvcPhpTouchePasAuKlaxon\Middleware\CsrfMiddleware;
 use Loic\DevoirAppMvcPhpTouchePasAuKlaxon\Controller\TripController;
 use Loic\DevoirAppMvcPhpTouchePasAuKlaxon\Controller\AdminController;
 use Buki\Router\Router;
@@ -28,6 +29,8 @@ $router->get('/login', function (): void {
 });
 
 $router->post('/login', function (): void {
+    CsrfMiddleware::validate('/login');
+
     $controller = new AuthController();
     $controller->login();
 });
@@ -46,6 +49,7 @@ $router->get('/trips/create', function (): void {
 
 $router->post('/trips', function (): void {
     AuthMiddleware::requireAuthentication();
+    CsrfMiddleware::validate('/trips/create');
 
     $controller = new TripController();
     $controller->store();
@@ -67,6 +71,7 @@ $router->get('/trips/:id/edit', function (string $id): void {
 
 $router->post('/trips/:id', function (string $id): void {
     AuthMiddleware::requireAuthentication();
+    CsrfMiddleware::validate("/trips/{$id}/edit");
 
     $controller = new TripController();
     $controller->update((int) $id);
@@ -74,6 +79,7 @@ $router->post('/trips/:id', function (string $id): void {
 
 $router->post('/trips/:id/delete', function (string $id): void {
     AuthMiddleware::requireAuthentication();
+    CsrfMiddleware::validate('/');
 
     $controller = new TripController();
     $controller->delete((int) $id);
@@ -95,6 +101,7 @@ $router->get('/admin/agencies/create', function (): void {
 
 $router->post('/admin/agencies', function (): void {
     AuthMiddleware::requireAdmin();
+    CsrfMiddleware::validate('/admin/agencies/create');
 
     $controller = new AdminController();
     $controller->storeAgency();
@@ -109,6 +116,7 @@ $router->get('/admin/agencies/:id/edit', function (int $id): void {
 
 $router->post('/admin/agencies/:id', function (int $id): void {
     AuthMiddleware::requireAdmin();
+    CsrfMiddleware::validate("/admin/agencies/{$id}/edit");
 
     $controller = new AdminController();
     $controller->updateAgency($id);
@@ -116,6 +124,7 @@ $router->post('/admin/agencies/:id', function (int $id): void {
 
 $router->post('/admin/agencies/:id/delete', function (int $id): void {
     AuthMiddleware::requireAdmin();
+    CsrfMiddleware::validate('/admin');
 
     $controller = new AdminController();
     $controller->deleteAgency($id);
@@ -123,6 +132,7 @@ $router->post('/admin/agencies/:id/delete', function (int $id): void {
 
 $router->post('/admin/trips/:id/delete', function (int $id): void {
     AuthMiddleware::requireAdmin();
+    CsrfMiddleware::validate('/admin');
 
     $controller = new AdminController();
     $controller->deleteTrip($id);

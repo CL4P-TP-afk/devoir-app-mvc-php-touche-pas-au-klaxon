@@ -200,6 +200,15 @@ $pageTitle = 'Tableau de bord administrateur';
                                                     'Supprimer cette agence ?'
                                                 );"
                                             >
+                                            <input
+                                                type="hidden"
+                                                name="csrf_token"
+                                                value="<?= htmlspecialchars(
+                                                    SessionService::getCsrfToken(),
+                                                    ENT_QUOTES,
+                                                    'UTF-8'
+                                                ) ?>"
+                                            >
                                                 <button
                                                     class="btn btn-sm
                                                            btn-outline-danger"
@@ -304,6 +313,15 @@ $pageTitle = 'Tableau de bord administrateur';
                                             onsubmit="return confirm(
                                                 'Supprimer ce trajet ?'
                                             );"
+                                        >
+                                        <input
+                                            type="hidden"
+                                            name="csrf_token"
+                                            value="<?= htmlspecialchars(
+                                                SessionService::getCsrfToken(),
+                                                ENT_QUOTES,
+                                                'UTF-8'
+                                            ) ?>"
                                         >
                                             <button
                                                 class="btn btn-sm

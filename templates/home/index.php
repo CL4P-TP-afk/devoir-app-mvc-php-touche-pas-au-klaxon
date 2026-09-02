@@ -164,6 +164,15 @@ $pageTitle = 'Accueil';
                                                         'Voulez-vous vraiment supprimer ce trajet ?'
                                                     );"
                                                 >
+                                                <input
+                                                    type="hidden"
+                                                    name="csrf_token"
+                                                    value="<?= htmlspecialchars(
+                                                        SessionService::getCsrfToken(),
+                                                        ENT_QUOTES,
+                                                        'UTF-8'
+                                                    ) ?>"
+                                                >
                                                     <button
                                                         class="btn btn-outline-danger w-100"
                                                         type="submit"
