@@ -75,12 +75,19 @@ class TripController
         $totalSeats = (int) ($_POST['total_seats'] ?? 0);
         $availableSeats = (int) ($_POST['available_seats'] ?? -1);
 
+        $currentUser = SessionService::getUser();
+
+        if ($currentUser === null) {
+            header('Location: /login');
+            exit;
+        }
+
         $contactPhone = trim(
-            (string) ($_POST['contact_phone'] ?? '')
+            (string) ($currentUser['phone'] ?? '')
         );
 
         $contactEmail = trim(
-            (string) ($_POST['contact_email'] ?? '')
+            (string) ($currentUser['email'] ?? '')
         );
 
         if (
@@ -256,13 +263,8 @@ class TripController
         $totalSeats = (int) ($_POST['total_seats'] ?? 0);
         $availableSeats = (int) ($_POST['available_seats'] ?? -1);
 
-        $contactPhone = trim(
-            (string) ($_POST['contact_phone'] ?? '')
-        );
-
-        $contactEmail = trim(
-            (string) ($_POST['contact_email'] ?? '')
-        );
+        $contactPhone = (string) $trip['contact_phone'];
+        $contactEmail = (string) $trip['contact_email'];
 
         if (
             $departureAgencyId <= 0
