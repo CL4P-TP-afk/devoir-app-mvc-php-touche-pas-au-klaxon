@@ -35,7 +35,10 @@ $router->post('/login', function (): void {
     $controller->login();
 });
 
-$router->get('/logout', function (): void {
+$router->post('/logout', function (): void {
+    AuthMiddleware::requireAuthentication();
+    CsrfMiddleware::validate('/');
+
     $controller = new AuthController();
     $controller->logout();
 });
