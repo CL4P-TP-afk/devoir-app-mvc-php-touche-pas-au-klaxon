@@ -157,7 +157,6 @@ $pageTitle = 'Tableau de bord administrateur';
                     >
                         <thead class="table-light">
                             <tr>
-                                <th scope="col">ID</th>
                                 <th scope="col">Nom</th>
                                 <th scope="col" class="text-end">
                                     Actions
@@ -168,10 +167,6 @@ $pageTitle = 'Tableau de bord administrateur';
                         <tbody>
                             <?php foreach ($agencies as $agency): ?>
                                 <tr>
-                                    <td>
-                                        <?= (int) $agency['id'] ?>
-                                    </td>
-
                                     <td>
                                         <?= htmlspecialchars(
                                             (string) $agency['name'],
