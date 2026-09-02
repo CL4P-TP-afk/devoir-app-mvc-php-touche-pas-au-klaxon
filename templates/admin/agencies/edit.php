@@ -45,6 +45,15 @@ $pageTitle = 'Modifier une agence';
                     action="/admin/agencies/<?= (int) $agency['id'] ?>"
                     method="post"
                 >
+                <input
+                    type="hidden"
+                    name="csrf_token"
+                    value="<?= htmlspecialchars(
+                        SessionService::getCsrfToken(),
+                        ENT_QUOTES,
+                        'UTF-8'
+                    ) ?>"
+                >
                     <div class="card-body p-4">
                         <label
                             class="form-label"

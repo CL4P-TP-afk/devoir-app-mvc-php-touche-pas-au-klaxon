@@ -127,4 +127,38 @@ class SessionService
 
         return $user['id'];
     }
+    /**
+     * Returns the CSRF token stored in the session.
+     *
+     * Generates a new cryptographically secure token when none exists.
+     */
+    public static function getCsrfToken(): string
+    {
+        self::start();
+
+        if (
+            !isset($_SESSION['csrf_token'])
+            || !is_string($_SESSION['csrf_token'])
+        ) {
+            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+        }
+
+        return $_SESSION['csrf_token'];
+    }
+
+    /**
+     * Checks whether the submitted CSRF token matches the session token.
+     */
+    public static function isCsrfTokenValid(?string $token): bool
+    {
+        self::start();
+
+        $sessionToken = $_SESSION['csrf_token'] ?? null;
+
+        if (!is_string($sessionToken) || $token === null) {
+            return false;
+        }
+
+        return hash_equals($sessionToken, $token);
+    }
 }

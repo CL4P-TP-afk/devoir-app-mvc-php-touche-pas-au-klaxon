@@ -52,6 +52,15 @@ $pageTitle = 'Connexion';
                         <?php endif; ?>
 
                         <form action="/login" method="post">
+                            <input
+                                type="hidden"
+                                name="csrf_token"
+                                value="<?= htmlspecialchars(
+                                    SessionService::getCsrfToken(),
+                                    ENT_QUOTES,
+                                    'UTF-8'
+                                ) ?>"
+                            >
                             <div class="mb-3">
                                 <label
                                     class="form-label"

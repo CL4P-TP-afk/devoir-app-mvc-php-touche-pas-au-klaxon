@@ -157,7 +157,6 @@ $pageTitle = 'Tableau de bord administrateur';
                     >
                         <thead class="table-light">
                             <tr>
-                                <th scope="col">ID</th>
                                 <th scope="col">Nom</th>
                                 <th scope="col" class="text-end">
                                     Actions
@@ -168,10 +167,6 @@ $pageTitle = 'Tableau de bord administrateur';
                         <tbody>
                             <?php foreach ($agencies as $agency): ?>
                                 <tr>
-                                    <td>
-                                        <?= (int) $agency['id'] ?>
-                                    </td>
-
                                     <td>
                                         <?= htmlspecialchars(
                                             (string) $agency['name'],
@@ -199,6 +194,15 @@ $pageTitle = 'Tableau de bord administrateur';
                                                 onsubmit="return confirm(
                                                     'Supprimer cette agence ?'
                                                 );"
+                                            >
+                                            <input
+                                                type="hidden"
+                                                name="csrf_token"
+                                                value="<?= htmlspecialchars(
+                                                    SessionService::getCsrfToken(),
+                                                    ENT_QUOTES,
+                                                    'UTF-8'
+                                                ) ?>"
                                             >
                                                 <button
                                                     class="btn btn-sm
@@ -304,6 +308,15 @@ $pageTitle = 'Tableau de bord administrateur';
                                             onsubmit="return confirm(
                                                 'Supprimer ce trajet ?'
                                             );"
+                                        >
+                                        <input
+                                            type="hidden"
+                                            name="csrf_token"
+                                            value="<?= htmlspecialchars(
+                                                SessionService::getCsrfToken(),
+                                                ENT_QUOTES,
+                                                'UTF-8'
+                                            ) ?>"
                                         >
                                             <button
                                                 class="btn btn-sm
