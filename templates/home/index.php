@@ -186,6 +186,7 @@ $pageTitle = 'Accueil';
                                 </div>
                             </div>
                         </article>
+                        <?php if ($currentUser !== null): ?>
                         <div
                             class="modal fade"
                             id="tripModal<?= (int) $trip['id'] ?>"
@@ -289,6 +290,7 @@ $pageTitle = 'Accueil';
                                 </div>
                             </div>
                         </div>
+                        <?php endif; ?>
                     </div>
                 <?php endforeach; ?>
             </div>
