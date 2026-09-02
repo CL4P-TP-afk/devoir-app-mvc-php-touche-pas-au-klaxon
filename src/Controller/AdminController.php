@@ -67,15 +67,25 @@ class AdminController
             exit;
         }
 
-        $this->agencyModel->create($name);
+        try {
+            $this->agencyModel->create($name);
 
-        SessionService::setFlash(
-            'success',
-            'L\'agence a été créée avec succès.'
-        );
+            SessionService::setFlash(
+                'success',
+                'L\'agence a été créée avec succès.'
+            );
 
-        header('Location: /admin');
-        exit;
+            header('Location: /admin');
+            exit;
+        } catch (PDOException $exception) {
+            SessionService::setFlash(
+                'error',
+                'Une agence portant ce nom existe déjà.'
+            );
+
+            header('Location: /admin/agencies/create');
+            exit;
+        }
     }
     /**
      * Displays the agency edition form.
@@ -127,15 +137,25 @@ class AdminController
             exit;
         }
 
-        $this->agencyModel->update($id, $name);
+        try {
+            $this->agencyModel->update($id, $name);
 
-        SessionService::setFlash(
-            'success',
-            'L\'agence a été modifiée avec succès.'
-        );
+            SessionService::setFlash(
+                'success',
+                'L\'agence a été modifiée avec succès.'
+            );
 
-        header('Location: /admin');
-        exit;
+            header('Location: /admin');
+            exit;
+        } catch (PDOException $exception) {
+            SessionService::setFlash(
+                'error',
+                'Une agence portant ce nom existe déjà.'
+            );
+
+            header("Location: /admin/agencies/{$id}/edit");
+            exit;
+        }
     }
     /**
      * Deletes an agency.
